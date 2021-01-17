@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Movement Box
+  - Screen
+  - Button
   layers:
   - Default
   - TransparentFX
@@ -16,9 +18,9 @@ TagManager:
   - 
   - Text
   - Movement Box
-  - Menu
-  - 
-  - 
+  - Screen
+  - Buttons
+  - Selection Target
   - 
   - 
   - 

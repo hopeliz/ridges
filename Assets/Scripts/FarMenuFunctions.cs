@@ -22,39 +22,41 @@ public class FarMenuFunctions : MonoBehaviour
     public Vector3 originalPostion;
 
     [Header("Target")]
-    public GameObject target;
-    public Vector3 targetFullSize;
-    public Vector3 selectedSize;
-    public float yOffset = 0;
-    public bool isHeld = false;
-    public float targetShrinkSpeed = 0.1F;
+    public GameObject selectionTarget;
 
     [Header("Interactions")]
     public int currentInteration = 0;   // Zero is no button, just moves
     
     void Start()
     {
-        targetFullSize = target.transform.localScale;
+        
     }
     
     void Update()
     {
+        // If ray hits something
         if (Physics.Raycast(rightBall.transform.position, rightBall.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, 10))
         {
+            // If the menu is open
             if (menuTarget.GetComponent<OpenCloseMenuBackground>().menuOpen)
             {
-                target.transform.position = hit.point;
+                // If the thing the ray hits is a screen or button
+                if (hit.transform.tag == "Screen" || hit.transform.tag == "Button")
+                {
+                    // Turn on selection target object and place it where the ray hits
+                    selectionTarget.SetActive(true);
+                    selectionTarget.transform.position = hit.point;
+                }
+                // Otherwise, turn off selection target object
+                else
+                {
+                    selectionTarget.SetActive(false);
+                }
             }
         }
 
         if (GetGrab())
         {
-
-            if (target.transform.localScale.x >= targetFullSize.x/2)
-            {
-                target.transform.localScale *= targetShrinkSpeed * Time.deltaTime;
-            }
-
             if (currentInteration == 1)
             {
                 menuTarget.GetComponent<OpenCloseMenuBackground>().CloseMenu();
@@ -79,62 +81,11 @@ public class FarMenuFunctions : MonoBehaviour
             {
                 resizeButtons.GetComponent<ResizeMenu>().Shrink();
             }
-
-            // Work on this!!
-            /*
-            if (currentInteration == 0)
-            {
-                if (!isHeld)
-                {
-                    yOffset = hit.point.y - menuTarget.GetComponent<TargetHeight>().menuHeight;
-                    isHeld = true;
-                }
-                else
-                {
-                    menuTarget.GetComponent<TargetHeight>().menuHeight = hit.point.y + yOffset;
-                }
-            }
-            */
-        }
-
-        if (!GetGrab())
-        {
-            isHeld = false;
-
-            if (target.transform.localScale.x < targetFullSize.x)
-            {
-                target.transform.localScale /= targetShrinkSpeed * Time.deltaTime;
-            }
         }
     }
 
     public bool GetGrab()
     {
         return triggerPull.GetState(handType);
-    }
-
-    public void OnTriggerStay(Collider other)
-    {
-        switch (other.transform.name)
-        {
-            case "Close Button":
-                currentInteration = 1;
-                break;
-            case "Left Button":
-                currentInteration = 2;
-                break;
-            case "Right Button":
-                currentInteration = 3;
-                break;
-            case "Grow Button":
-                currentInteration = 4;
-                break;
-            case "Shrink Button":
-                currentInteration = 5;
-                break;
-            default:
-                currentInteration = 0;
-                break;
-        }
     }
 }

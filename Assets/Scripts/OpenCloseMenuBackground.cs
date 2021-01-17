@@ -22,6 +22,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
     public Material menuRectangle;
     public Vector3 menuFullSize;
     public Vector3 menuSmall;
+    public GameObject selectionTarget;
 
     [Header("Values")]
     public float growSpeed = 1;
@@ -49,6 +50,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
             {
                 openingMenu = false;
                 menuOpen = true;
+                selectionTarget.GetComponent<SelectionTargetBehavior>().currentScreen = menuTargetObject;
                 menuContentContainer.SetActive(true);
             }
         }
@@ -63,6 +65,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
             {
                 closingMenu = false;
                 menuOpen = false;
+                selectionTarget.GetComponent<SelectionTargetBehavior>().currentScreen = null;
                 menuBackgroundContainer.gameObject.SetActive(false);
                 transform.GetComponent<Renderer>().material = menuTargetMaterial;
             }
