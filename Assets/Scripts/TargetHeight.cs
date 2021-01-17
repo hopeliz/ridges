@@ -15,7 +15,7 @@ public class TargetHeight : MonoBehaviour
         transform.position = new Vector3(transform.position.x, groundPlane.position.y + 0.001F, transform.position.z);
 
         // Control menu height
-        menuContents.transform.position = new Vector3(menuContents.transform.position.x, groundPlane.position.y + menuHeight, menuContents.transform.position.z);
+        menuContents.transform.position = new Vector3(menuContents.transform.position.x, groundPlane.position.y + 0.5F, menuContents.transform.position.z);
 
         // Rotates target with right mouse button
         if (Input.GetMouseButton(1))

@@ -28,25 +28,26 @@ public class SelectionTargetBehavior : MonoBehaviour
 
     void Update()
     {
+        
         if (GetGrab())
         {
-            isHeld = true;
+            //isHeld = true;
 
             // Shrink selection target as feedback from pulling trigger
-            if (transform.localScale.x >= fullSize.x / 2)
+            //if (transform.localScale.x >= fullSize.x / 2)
             {
-                transform.localScale *= shrinkSpeed * Time.deltaTime;
+               // transform.localScale *= shrinkSpeed * Time.deltaTime;
             }
         }
 
         if (!GetGrab())
         {
-            isHeld = false;
+            //isHeld = false;
 
             // Return selection target to normal size as feedback from releasing trigger
-            if (transform.localScale.x < fullSize.x)
+            //if (transform.localScale.x < fullSize.x)
             {
-                transform.localScale /= shrinkSpeed * Time.deltaTime;
+                //transform.localScale /= shrinkSpeed * Time.deltaTime;
             }
         }
     }

@@ -25,34 +25,33 @@ public class FarMenuFunctions : MonoBehaviour
     public GameObject selectionTarget;
 
     [Header("Interactions")]
-    public int currentInteration = 0;   // Zero is no button, just moves
     
-    void Start()
-    {
-        
-    }
+    public int currentInteration = 0;   // Zero is no button, just moves
     
     void Update()
     {
+        print("test");
+        int layerMask = 1 << 10;
+        //int layerMask = 1 << 9;
+        //layerMask = ~layerMask;
+
         // If ray hits something
-        if (Physics.Raycast(rightBall.transform.position, rightBall.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, 10))
+        if (Physics.Raycast(rightBall.transform.position, rightBall.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, layerMask))
         {
+            print("Right hand menu ray hit: " + hit.transform.name);
+
             // If the menu is open
             if (menuTarget.GetComponent<OpenCloseMenuBackground>().menuOpen)
             {
-                // If the thing the ray hits is a screen or button
-                if (hit.transform.tag == "Screen" || hit.transform.tag == "Button")
-                {
-                    // Turn on selection target object and place it where the ray hits
-                    selectionTarget.SetActive(true);
-                    selectionTarget.transform.position = hit.point;
-                }
-                // Otherwise, turn off selection target object
-                else
-                {
-                    selectionTarget.SetActive(false);
-                }
+                selectionTarget.SetActive(true);
+                selectionTarget.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.05F);
+                selectionTarget.transform.eulerAngles = menuTarget.transform.eulerAngles;
             }
+        }
+        else
+        {
+            selectionTarget.SetActive(false);
+            print("Not hitting things.");
         }
 
         if (GetGrab())
