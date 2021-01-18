@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class CloseButton : MonoBehaviour
 {
-    public GameObject menuTarget;
+    public GrabScreenInfo grabScreenInfo;
+    public bool isMenu = false;
 
     public void ButtonFunction()
     {
-        menuTarget.GetComponent<OpenCloseMenuBackground>().CloseMenu();
+        if (isMenu)
+        {
+            grabScreenInfo.wholeScreenObject.GetComponent<OpenCloseMenuBackground>().CloseMenu();
+        }
+        else
+        {
+            grabScreenInfo.wholeScreenObject.GetComponent<OpenCloseScreen>().CloseScreen();
+        }
     }
 
     public void OnTriggerEnter(Collider other)

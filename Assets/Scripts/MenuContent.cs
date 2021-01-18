@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class MenuContent : MonoBehaviour
 {
-    [Header("Menu")]
-    public GameObject menuTarget;
-
     [Header("Pages")]
     public List<GameObject> menuContentScreens;
     public int page = 0;

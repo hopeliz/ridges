@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ButtonBehavior : MonoBehaviour
 {
-    public GameObject menuTarget;
-    public GameObject menuContentContainer;
+    public GrabScreenInfo grabScreenInfo;
+    public GameObject wholeScreenTarget;
+    public GameObject contentContainer;
 
     public int buttonType = 0;
     // 0 - null
@@ -17,16 +18,27 @@ public class ButtonBehavior : MonoBehaviour
 
     public void PressButton()
     {
+        // Get references
+        wholeScreenTarget = grabScreenInfo.wholeScreenObject;
+        contentContainer = grabScreenInfo.contentContainer;
+
         switch (buttonType)
         {
             case 1:
-                menuTarget.GetComponent<OpenCloseMenuBackground>().CloseMenu();
+                if (grabScreenInfo.isMenu)
+                {
+                    wholeScreenTarget.GetComponent<OpenCloseMenuBackground>().CloseMenu();
+                }
+                else
+                {
+                    wholeScreenTarget.GetComponent<OpenCloseScreen>().CloseScreen();
+                }
                 break;
             case 2:
-                menuContentContainer.GetComponent<MenuContent>().GoBack();
+                contentContainer.GetComponent<MenuContent>().GoBack();
                 break;
             case 3:
-                menuContentContainer.GetComponent<MenuContent>().GoForward();
+                contentContainer.GetComponent<MenuContent>().GoForward();
                 break;
             default:
                 break;

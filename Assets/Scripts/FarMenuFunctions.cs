@@ -5,29 +5,35 @@ using Valve.VR;
 
 public class FarMenuFunctions : MonoBehaviour
 {
+    [Header("Script References")]
+    [Tooltip("This will change based on where target hits.")]
+    public GrabScreenInfo grabScreenInfo;
+
     [Header("Controller")]
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Boolean triggerPull;
     public GameObject rightBall;
 
     [Header("Menu Assets")]
-    public GameObject menuTarget;
-    public GameObject menuContentContainer;
-    public GameObject resizeButtons;
-    public GameObject closeButton;
-    public GameObject rightButton;
-    public GameObject leftButton;
-    public GameObject growButton;
-    public GameObject shrinkButton;
-    public Vector3 originalPostion;
+    public GameObject wholeScreenTarget;
+    public GameObject contentContainer;
+    //public GameObject resizeButtons;
+    //public GameObject closeButton;
+    //public GameObject rightButton;
+    //public GameObject leftButton;
+    //public GameObject growButton;
+    //public GameObject shrinkButton;
+    //public Vector3 originalPostion;
 
     [Header("Target")]
     public GameObject selectionTarget;
 
-    [Header("Interactions")]
-    
-    public int currentInteration = 0;   // Zero is no button, just moves
-    
+    private void Start()
+    {
+        // Get references
+        grabScreenInfo = null;
+    }
+
     void Update()
     {
         print("test");
@@ -40,16 +46,45 @@ public class FarMenuFunctions : MonoBehaviour
         {
             print("Right hand menu ray hit: " + hit.transform.name);
 
-            // If the menu is open
-            if (menuTarget.GetComponent<OpenCloseMenuBackground>().menuOpen)
+            // Set Grab Screen Info if it's avalable
+            if (hit.transform.GetComponent<GrabScreenInfo>() != null)
             {
-                selectionTarget.SetActive(true);
-                selectionTarget.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.04F);
-                selectionTarget.transform.eulerAngles = menuTarget.transform.eulerAngles;
+                grabScreenInfo = hit.transform.GetComponent<GrabScreenInfo>();
+            }
+
+            if (grabScreenInfo != null)
+            {
+                wholeScreenTarget = grabScreenInfo.wholeScreenObject;
+                contentContainer = grabScreenInfo.contentContainer;
+
+                // If it's a menu
+                if (wholeScreenTarget.GetComponent<OpenCloseMenuBackground>() != null)
+                {
+                    // If the menu is open
+                    if (wholeScreenTarget.GetComponent<OpenCloseMenuBackground>().menuOpen)
+                    {
+                        selectionTarget.SetActive(true);
+                        selectionTarget.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.04F);
+                        selectionTarget.transform.eulerAngles = wholeScreenTarget.transform.eulerAngles;
+                    }
+                }
+
+                // If it's a screen
+                if (wholeScreenTarget.GetComponent<OpenCloseScreen>() != null)
+                {
+                    // If the screen is open
+                    if (wholeScreenTarget.GetComponent<OpenCloseScreen>().screenOpen)
+                    {
+                        selectionTarget.SetActive(true);
+                        selectionTarget.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.04F);
+                        selectionTarget.transform.eulerAngles = wholeScreenTarget.transform.eulerAngles;
+                    }
+                }
             }
         }
         else
         {
+            grabScreenInfo = null;
             selectionTarget.SetActive(false);
             print("Not hitting things.");
         }

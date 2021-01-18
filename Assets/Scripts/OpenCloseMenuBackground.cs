@@ -5,9 +5,11 @@ using Valve.VR;
 
 public class OpenCloseMenuBackground : MonoBehaviour
 {
-    [Header("Other Scripts")]
+    [Header("Script References")]
     public MenuSafety menuSafety;
     public SelectionTargetBehavior selectionTargetBehavior;
+    public GrabScreenInfo grabScreenInfo;
+
 
     [Header("Controller")]
     public SteamVR_Input_Sources handType;
@@ -16,9 +18,9 @@ public class OpenCloseMenuBackground : MonoBehaviour
     public SteamVR_Action_Boolean joystickLeft;
 
     [Header("Menu Assets")]
-    public Transform menuTargetObject;
-    public Transform menuBackgroundContainer;
-    public GameObject menuContentContainer;
+    public Transform wholeScreenTarget;
+    public Transform backgroundContainer;
+    public GameObject contentContainer;
     public GameObject menuSafetyBox;
     public Material menuTargetMaterial;
     public Material menuRectangle;
@@ -34,35 +36,41 @@ public class OpenCloseMenuBackground : MonoBehaviour
 
     void Start()
     {
-        menuFullSize = menuBackgroundContainer.localScale;
-        menuSmall = new Vector3(menuBackgroundContainer.localScale.x, menuBackgroundContainer.localScale.y, 0.001F);
-        menuBackgroundContainer.localScale = menuSmall;
-        menuBackgroundContainer.gameObject.SetActive(false);
+        // Get references
+        wholeScreenTarget = grabScreenInfo.wholeScreenObject.transform;
+        backgroundContainer = grabScreenInfo.backgroundContainer.transform;
+        contentContainer = grabScreenInfo.contentContainer;
+
+        // Initial settings
+        menuFullSize = backgroundContainer.localScale;
+        menuSmall = new Vector3(backgroundContainer.localScale.x, backgroundContainer.localScale.y, 0.001F);
+        backgroundContainer.localScale = menuSmall;
+        backgroundContainer.gameObject.SetActive(false);
     }
 
     void Update()
     {
         if (openingMenu)
         {
-            if (menuBackgroundContainer.localScale.z < menuFullSize.z)
+            if (backgroundContainer.localScale.z < menuFullSize.z)
             {
-                menuBackgroundContainer.localScale += Vector3.forward * Time.deltaTime * growSpeed;
+                backgroundContainer.localScale += Vector3.forward * Time.deltaTime * growSpeed;
             }
             else
             {
                 openingMenu = false;
                 menuOpen = true;
                 menuSafetyBox.SetActive(false);
-                selectionTarget.GetComponent<SelectionTargetBehavior>().currentScreen = menuTargetObject;
-                menuContentContainer.SetActive(true);
+                selectionTarget.GetComponent<SelectionTargetBehavior>().currentScreen = wholeScreenTarget;
+                contentContainer.SetActive(true);
             }
         }
 
         if (closingMenu)
         {
-            if (menuBackgroundContainer.localScale.z > 0.001F)
+            if (backgroundContainer.localScale.z > 0.001F)
             {
-                menuBackgroundContainer.localScale += Vector3.back * Time.deltaTime;
+                backgroundContainer.localScale += Vector3.back * Time.deltaTime;
             }
             else
             {
@@ -70,7 +78,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
                 menuOpen = false;
                 menuSafetyBox.SetActive(true);
                 selectionTarget.GetComponent<SelectionTargetBehavior>().currentScreen = null;
-                menuBackgroundContainer.gameObject.SetActive(false);
+                backgroundContainer.gameObject.SetActive(false);
                 transform.GetComponent<Renderer>().material = menuTargetMaterial;
             }
         }
@@ -92,12 +100,12 @@ public class OpenCloseMenuBackground : MonoBehaviour
 
         if (GetEast())
         {
-            menuTargetObject.eulerAngles += Vector3.up * menuTargetObject.GetComponent<TargetHeight>().rotateSpeed * Time.deltaTime;
+            wholeScreenTarget.eulerAngles += Vector3.up * wholeScreenTarget.GetComponent<TargetHeight>().rotateSpeed * Time.deltaTime;
         }
 
         if (GetWest())
         {
-            menuTargetObject.eulerAngles += Vector3.down * menuTargetObject.GetComponent<TargetHeight>().rotateSpeed * Time.deltaTime;
+            wholeScreenTarget.eulerAngles += Vector3.down * wholeScreenTarget.GetComponent<TargetHeight>().rotateSpeed * Time.deltaTime;
         }
 
         // KEYBOARD SHORTCUTS FOR TESTING
@@ -119,7 +127,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
     {
         if (menuSafety.safeMenu)
         {
-            menuBackgroundContainer.gameObject.SetActive(true);
+            backgroundContainer.gameObject.SetActive(true);
             transform.GetComponent<Renderer>().material = menuRectangle;
             openingMenu = true;
         }
@@ -131,7 +139,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
 
     public void CloseMenu()
     {
-        menuContentContainer.SetActive(false);
+        contentContainer.SetActive(false);
         closingMenu = true;
     }
 
