@@ -5,136 +5,88 @@ using Valve.VR;
 
 public class FarMenuFunctions : MonoBehaviour
 {
+    [Header("Script References")]
+    [Tooltip("This will change based on where target hits.")]
+    public GrabScreenInfo grabScreenInfo;
+
     [Header("Controller")]
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Boolean triggerPull;
     public GameObject rightBall;
 
     [Header("Menu Assets")]
-    public GameObject menuTarget;
-    public GameObject menuContentContainer;
-    public GameObject resizeButtons;
-    public GameObject closeButton;
-    public GameObject rightButton;
-    public GameObject leftButton;
-    public GameObject growButton;
-    public GameObject shrinkButton;
-    public Vector3 originalPostion;
+    public GameObject wholeScreenTarget;
+    public GameObject contentContainer;
+    //public GameObject resizeButtons;
+    //public GameObject closeButton;
+    //public GameObject rightButton;
+    //public GameObject leftButton;
+    //public GameObject growButton;
+    //public GameObject shrinkButton;
+    //public Vector3 originalPostion;
 
     [Header("Target")]
-    public GameObject target;
-    public Vector3 targetFullSize;
-    public Vector3 selectedSize;
-    public float yOffset = 0;
-    public bool isHeld = false;
-    public float targetShrinkSpeed = 0.1F;
+    public GameObject selectionTarget;
 
-    [Header("Interactions")]
-    public int currentInteration = 0;   // Zero is no button, just moves
-    
-    void Start()
+    private void Start()
     {
-        targetFullSize = target.transform.localScale;
+        // Get references
+        grabScreenInfo = null;
     }
-    
+
     void Update()
     {
-        if (Physics.Raycast(rightBall.transform.position, rightBall.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, 10))
+        print("test");
+        int layerMask = 1 << 10;
+        //int layerMask = 1 << 9;
+        //layerMask = ~layerMask;
+
+        // If ray hits something
+        if (Physics.Raycast(rightBall.transform.position, rightBall.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, layerMask))
         {
-            if (menuTarget.GetComponent<OpenCloseMenuBackground>().menuOpen)
-            {
-                target.transform.position = hit.point;
-            }
-        }
+            print("Right hand menu ray hit: " + hit.transform.name);
 
-        if (GetGrab())
-        {
-
-            if (target.transform.localScale.x >= targetFullSize.x/2)
+            // Set Grab Screen Info if it's avalable
+            if (hit.transform.GetComponent<GrabScreenInfo>() != null)
             {
-                target.transform.localScale *= targetShrinkSpeed * Time.deltaTime;
+                grabScreenInfo = hit.transform.GetComponent<GrabScreenInfo>();
             }
 
-            if (currentInteration == 1)
+            if (grabScreenInfo != null)
             {
-                menuTarget.GetComponent<OpenCloseMenuBackground>().CloseMenu();
-            }
+                wholeScreenTarget = grabScreenInfo.wholeScreenObject;
+                contentContainer = grabScreenInfo.contentContainer;
 
-            if (currentInteration == 2)
-            {
-                menuContentContainer.GetComponent<MenuContent>().GoBack();
-            }
-
-            if (currentInteration == 3)
-            {
-                menuContentContainer.GetComponent<MenuContent>().GoForward();
-            }
-
-            if (currentInteration == 4)
-            {
-                resizeButtons.GetComponent<ResizeMenu>().Grow();
-            }
-
-            if (currentInteration == 5)
-            {
-                resizeButtons.GetComponent<ResizeMenu>().Shrink();
-            }
-
-            // Work on this!!
-            /*
-            if (currentInteration == 0)
-            {
-                if (!isHeld)
+                // If it's a menu
+                if (wholeScreenTarget.GetComponent<OpenCloseMenuBackground>() != null)
                 {
-                    yOffset = hit.point.y - menuTarget.GetComponent<TargetHeight>().menuHeight;
-                    isHeld = true;
+                    // If the menu is open
+                    if (wholeScreenTarget.GetComponent<OpenCloseMenuBackground>().menuOpen)
+                    {
+                        selectionTarget.SetActive(true);
+                        selectionTarget.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.04F);
+                        selectionTarget.transform.eulerAngles = wholeScreenTarget.transform.eulerAngles;
+                    }
                 }
-                else
+
+                // If it's a screen
+                if (wholeScreenTarget.GetComponent<OpenCloseScreen>() != null)
                 {
-                    menuTarget.GetComponent<TargetHeight>().menuHeight = hit.point.y + yOffset;
+                    // If the screen is open
+                    if (wholeScreenTarget.GetComponent<OpenCloseScreen>().screenOpen)
+                    {
+                        selectionTarget.SetActive(true);
+                        selectionTarget.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.04F);
+                        selectionTarget.transform.eulerAngles = wholeScreenTarget.transform.eulerAngles;
+                    }
                 }
             }
-            */
         }
-
-        if (!GetGrab())
+        else
         {
-            isHeld = false;
-
-            if (target.transform.localScale.x < targetFullSize.x)
-            {
-                target.transform.localScale /= targetShrinkSpeed * Time.deltaTime;
-            }
-        }
-    }
-
-    public bool GetGrab()
-    {
-        return triggerPull.GetState(handType);
-    }
-
-    public void OnTriggerStay(Collider other)
-    {
-        switch (other.transform.name)
-        {
-            case "Close Button":
-                currentInteration = 1;
-                break;
-            case "Left Button":
-                currentInteration = 2;
-                break;
-            case "Right Button":
-                currentInteration = 3;
-                break;
-            case "Grow Button":
-                currentInteration = 4;
-                break;
-            case "Shrink Button":
-                currentInteration = 5;
-                break;
-            default:
-                currentInteration = 0;
-                break;
+            grabScreenInfo = null;
+            selectionTarget.SetActive(false);
+            print("Not hitting things.");
         }
     }
 }
