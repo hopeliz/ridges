@@ -1,7 +1,7 @@
 # ridges
 Github backup for my thesis as a move from computer to computer and get into the nitty gritty.
 
-Currently: 
+Currently in right-hand-work: 
 * Movement and menu placement works
 * Menu can rotate, open, close
 * Menu selection circle (soon to be icon?) works, but needs polished
