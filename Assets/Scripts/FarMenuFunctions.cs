@@ -44,7 +44,7 @@ public class FarMenuFunctions : MonoBehaviour
             if (menuTarget.GetComponent<OpenCloseMenuBackground>().menuOpen)
             {
                 selectionTarget.SetActive(true);
-                selectionTarget.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.05F);
+                selectionTarget.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z - 0.04F);
                 selectionTarget.transform.eulerAngles = menuTarget.transform.eulerAngles;
             }
         }
@@ -53,38 +53,5 @@ public class FarMenuFunctions : MonoBehaviour
             selectionTarget.SetActive(false);
             print("Not hitting things.");
         }
-
-        if (GetGrab())
-        {
-            if (currentInteration == 1)
-            {
-                menuTarget.GetComponent<OpenCloseMenuBackground>().CloseMenu();
-            }
-
-            if (currentInteration == 2)
-            {
-                menuContentContainer.GetComponent<MenuContent>().GoBack();
-            }
-
-            if (currentInteration == 3)
-            {
-                menuContentContainer.GetComponent<MenuContent>().GoForward();
-            }
-
-            if (currentInteration == 4)
-            {
-                resizeButtons.GetComponent<ResizeMenu>().Grow();
-            }
-
-            if (currentInteration == 5)
-            {
-                resizeButtons.GetComponent<ResizeMenu>().Shrink();
-            }
-        }
-    }
-
-    public bool GetGrab()
-    {
-        return triggerPull.GetState(handType);
     }
 }

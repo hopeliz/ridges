@@ -7,6 +7,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
 {
     [Header("Other Scripts")]
     public MenuSafety menuSafety;
+    public SelectionTargetBehavior selectionTargetBehavior;
 
     [Header("Controller")]
     public SteamVR_Input_Sources handType;
@@ -18,6 +19,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
     public Transform menuTargetObject;
     public Transform menuBackgroundContainer;
     public GameObject menuContentContainer;
+    public GameObject menuSafetyBox;
     public Material menuTargetMaterial;
     public Material menuRectangle;
     public Vector3 menuFullSize;
@@ -50,6 +52,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
             {
                 openingMenu = false;
                 menuOpen = true;
+                menuSafetyBox.SetActive(false);
                 selectionTarget.GetComponent<SelectionTargetBehavior>().currentScreen = menuTargetObject;
                 menuContentContainer.SetActive(true);
             }
@@ -65,6 +68,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
             {
                 closingMenu = false;
                 menuOpen = false;
+                menuSafetyBox.SetActive(true);
                 selectionTarget.GetComponent<SelectionTargetBehavior>().currentScreen = null;
                 menuBackgroundContainer.gameObject.SetActive(false);
                 transform.GetComponent<Renderer>().material = menuTargetMaterial;
@@ -73,8 +77,17 @@ public class OpenCloseMenuBackground : MonoBehaviour
 
         if (GetPull())
         {
-            print("Open");
-            OpenMenu();
+            if (!menuOpen)
+            {
+                print("Open");
+                OpenMenu();
+            }
+
+            if (menuOpen)
+            {
+                print("Try to close");
+                selectionTargetBehavior.buttonHighlighted.GetComponent<ButtonBehavior>().PressButton();
+            }
         }
 
         if (GetEast())
@@ -124,7 +137,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
 
     public bool GetPull()
     {
-        return triggerPull.GetState(handType);
+        return triggerPull.GetStateDown(handType);
     }
 
     public bool GetEast()

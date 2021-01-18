@@ -19,6 +19,7 @@ public class SelectionTargetBehavior : MonoBehaviour
 
     [Header("Interaction")]
     public Transform currentScreen;
+    public GameObject buttonHighlighted;
     
     void Start()
     {
@@ -28,60 +29,52 @@ public class SelectionTargetBehavior : MonoBehaviour
 
     void Update()
     {
-        
+
+    }
+
+    public void OnTriggerStay(Collider other)
+    {
+        print("Target is hitting this: " + other.transform.name);
+
+        buttonHighlighted = other.gameObject;
+        /**
         if (GetGrab())
         {
-            //isHeld = true;
-
-            // Shrink selection target as feedback from pulling trigger
-            //if (transform.localScale.x >= fullSize.x / 2)
-            {
-               // transform.localScale *= shrinkSpeed * Time.deltaTime;
-            }
+            print("pressing close");
+            currentScreen.GetComponent<OpenCloseMenuBackground>().CloseMenu();
         }
+        **/
 
-        if (!GetGrab())
+    /**
+    if (currentScreen.name == "Menu Target")
+    {
+        switch (other.transform.name)
         {
-            //isHeld = false;
-
-            // Return selection target to normal size as feedback from releasing trigger
-            //if (transform.localScale.x < fullSize.x)
-            {
-                //transform.localScale /= shrinkSpeed * Time.deltaTime;
-            }
+            case "Close Button":
+                selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 1;
+                break;
+            case "Left Button":
+                selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 2;
+                break;
+            case "Right Button":
+                selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 3;
+                break;
+            case "Grow Button":
+                selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 4;
+                break;
+            case "Shrink Button":
+                selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 5;
+                break;
+            default:
+                selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 0;
+                break;
         }
+    }
+    **/
     }
 
     public bool GetGrab()
     {
         return triggerPull.GetState(handType);
-    }
-
-    public void OnTriggerStay(Collider other)
-    {
-        if (currentScreen.name == "Menu Target")
-        {
-            switch (other.transform.name)
-            {
-                case "Close Button":
-                    selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 1;
-                    break;
-                case "Left Button":
-                    selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 2;
-                    break;
-                case "Right Button":
-                    selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 3;
-                    break;
-                case "Grow Button":
-                    selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 4;
-                    break;
-                case "Shrink Button":
-                    selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 5;
-                    break;
-                default:
-                    selectionTargetContainer.GetComponent<FarMenuFunctions>().currentInteration = 0;
-                    break;
-            }
-        }
     }
 }
