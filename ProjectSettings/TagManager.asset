@@ -8,6 +8,8 @@ TagManager:
   - Screen
   - Button
   - Stairs
+  - Ground
+  - 2nd Floor
   layers:
   - Default
   - TransparentFX

@@ -19,7 +19,7 @@ public class SelectionTargetBehavior : MonoBehaviour
 
     [Header("Interaction")]
     public Transform currentScreen;
-    public GameObject buttonHighlighted;
+    public GameObject buttonHighlighted = null;
     
     void Start()
     {

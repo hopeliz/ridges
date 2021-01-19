@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class FollowMovementCollider : MonoBehaviour
 {
+    public PlaceMenuTarget placeMenuTarget;
     public Transform thingToFollow;
-    public float offset = 0.1431707F;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    public float offset = 0.2F;
+    
     void Update()
     {
         transform.position = new Vector3(transform.position.x, thingToFollow.position.y - offset, transform.position.z);
+
+        if (transform.position.y + offset > placeMenuTarget.secondFloor.transform.position.y)
+        {
+            placeMenuTarget.floor = 1;
+        } else
+        {
+            placeMenuTarget.floor = 0;
+        }
     }
 }
