@@ -16,6 +16,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
     public SteamVR_Action_Boolean triggerPull;
     public SteamVR_Action_Boolean joystickRight;
     public SteamVR_Action_Boolean joystickLeft;
+    public GameObject playerCamera;
 
     [Header("Menu Assets")]
     public Transform wholeScreenTarget;
@@ -50,6 +51,12 @@ public class OpenCloseMenuBackground : MonoBehaviour
 
     void Update()
     {
+        if (!menuOpen)
+        {
+            wholeScreenTarget.transform.LookAt(playerCamera.transform);
+            wholeScreenTarget.transform.eulerAngles = new Vector3(90, wholeScreenTarget.transform.eulerAngles.y + 180, 0);
+        }
+
         if (openingMenu)
         {
             if (backgroundContainer.localScale.z < menuFullSize.z)
@@ -94,7 +101,11 @@ public class OpenCloseMenuBackground : MonoBehaviour
             if (menuOpen)
             {
                 print("Try to close");
-                selectionTargetBehavior.buttonHighlighted.GetComponent<ButtonBehavior>().PressButton();
+                
+                if (selectionTargetBehavior.buttonHighlighted != null)
+                {
+                    selectionTargetBehavior.buttonHighlighted.GetComponent<ButtonBehavior>().PressButton();
+                }
             }
         }
 
