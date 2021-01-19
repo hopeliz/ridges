@@ -16,6 +16,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
     public SteamVR_Action_Boolean triggerPull;
     public SteamVR_Action_Boolean joystickRight;
     public SteamVR_Action_Boolean joystickLeft;
+    public SteamVR_Action_Boolean grabGrip;
     public GameObject playerCamera;
 
     [Header("Menu Assets")]
@@ -119,6 +120,11 @@ public class OpenCloseMenuBackground : MonoBehaviour
             wholeScreenTarget.eulerAngles += Vector3.down * wholeScreenTarget.GetComponent<TargetHeight>().rotateSpeed * Time.deltaTime;
         }
 
+        if (GetGrabGrip())
+        {
+            CloseMenu();
+        }
+
         // KEYBOARD SHORTCUTS FOR TESTING
         if (Input.GetKeyDown(KeyCode.O))
         {
@@ -167,5 +173,10 @@ public class OpenCloseMenuBackground : MonoBehaviour
     public bool GetWest()
     {
         return joystickLeft.GetState(handType);
+    }
+
+    public bool GetGrabGrip()
+    {
+        return grabGrip.GetStateDown(handType);
     }
 }
