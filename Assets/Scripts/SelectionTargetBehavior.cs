@@ -31,7 +31,21 @@ public class SelectionTargetBehavior : MonoBehaviour
     {
         print("Target is hitting this: " + other.transform.name);
 
-        buttonHighlighted = other.gameObject;
+        if (other.gameObject != null)
+        {
+            if (other.gameObject.layer == 11)
+            {
+                buttonHighlighted = other.gameObject;
+            }
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == 11)
+        {
+            buttonHighlighted = null;
+        }
     }
 
     public bool GetGrab()

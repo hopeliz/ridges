@@ -85,6 +85,7 @@ public class FarMenuFunctions : MonoBehaviour
         else
         {
             grabScreenInfo = null;
+            selectionTarget.GetComponent<SelectionTargetBehavior>().buttonHighlighted = null;
             selectionTarget.SetActive(false);
             print("Not hitting things.");
         }
