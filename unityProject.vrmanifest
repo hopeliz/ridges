@@ -5,7 +5,7 @@
       "app_key": "application.generated.unity.ridgesvr.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\hopem\\Documents\\GitHub\\ridges\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "C:\\Users\\hopem\\Documents\\Unity Projects\\Ridges - VR\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "RidgesVRTesting01 [Testing]"
