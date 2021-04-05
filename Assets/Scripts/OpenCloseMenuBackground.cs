@@ -14,8 +14,8 @@ public class OpenCloseMenuBackground : MonoBehaviour
     [Header("Controller")]
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Boolean triggerPull;
-    public SteamVR_Action_Boolean joystickRight;
-    public SteamVR_Action_Boolean joystickLeft;
+    //public SteamVR_Action_Boolean joystickRight;
+    //public SteamVR_Action_Boolean joystickLeft;
     public SteamVR_Action_Boolean grabGrip;
     public GameObject playerCamera;
 
@@ -109,7 +109,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
                 }
             }
         }
-
+        /*
         if (GetEast())
         {
             wholeScreenTarget.eulerAngles += Vector3.up * wholeScreenTarget.GetComponent<TargetHeight>().rotateSpeed * Time.deltaTime;
@@ -119,6 +119,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
         {
             wholeScreenTarget.eulerAngles += Vector3.down * wholeScreenTarget.GetComponent<TargetHeight>().rotateSpeed * Time.deltaTime;
         }
+        */
 
         if (GetGrabGrip())
         {
@@ -165,6 +166,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
         return triggerPull.GetStateDown(handType);
     }
 
+    /*
     public bool GetEast()
     {
         return joystickRight.GetState(handType);
@@ -174,7 +176,7 @@ public class OpenCloseMenuBackground : MonoBehaviour
     {
         return joystickLeft.GetState(handType);
     }
-
+    */
     public bool GetGrabGrip()
     {
         return grabGrip.GetStateDown(handType);

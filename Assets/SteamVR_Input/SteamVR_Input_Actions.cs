@@ -45,6 +45,18 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_default_CloseTheMenu;
         
+        private static SteamVR_Action_Boolean p_default_MoveForward;
+        
+        private static SteamVR_Action_Boolean p_default_MoveBackward;
+        
+        private static SteamVR_Action_Boolean p_default_MoveLeft;
+        
+        private static SteamVR_Action_Boolean p_default_MoveRight;
+        
+        private static SteamVR_Action_Boolean p_default_RotateRight;
+        
+        private static SteamVR_Action_Boolean p_default_RotateLeft;
+        
         private static SteamVR_Action_Vibration p_default_Haptic;
         
         private static SteamVR_Action_Pose p_mixedreality_ExternalCamera;
@@ -161,6 +173,54 @@ namespace Valve.VR
             }
         }
         
+        public static SteamVR_Action_Boolean default_MoveForward
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_MoveForward.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_MoveBackward
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_MoveBackward.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_MoveLeft
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_MoveLeft.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_MoveRight
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_MoveRight.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_RotateRight
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_RotateRight.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
+        public static SteamVR_Action_Boolean default_RotateLeft
+        {
+            get
+            {
+                return SteamVR_Actions.p_default_RotateLeft.GetCopy<SteamVR_Action_Boolean>();
+            }
+        }
+        
         public static SteamVR_Action_Vibration default_Haptic
         {
             get
@@ -194,6 +254,12 @@ namespace Valve.VR
                     SteamVR_Actions.default_RotateMenuLeft,
                     SteamVR_Actions.default_RotateMenuRight,
                     SteamVR_Actions.default_CloseTheMenu,
+                    SteamVR_Actions.default_MoveForward,
+                    SteamVR_Actions.default_MoveBackward,
+                    SteamVR_Actions.default_MoveLeft,
+                    SteamVR_Actions.default_MoveRight,
+                    SteamVR_Actions.default_RotateRight,
+                    SteamVR_Actions.default_RotateLeft,
                     SteamVR_Actions.default_Haptic,
                     SteamVR_Actions.mixedreality_ExternalCamera};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
@@ -211,6 +277,12 @@ namespace Valve.VR
                     SteamVR_Actions.default_RotateMenuLeft,
                     SteamVR_Actions.default_RotateMenuRight,
                     SteamVR_Actions.default_CloseTheMenu,
+                    SteamVR_Actions.default_MoveForward,
+                    SteamVR_Actions.default_MoveBackward,
+                    SteamVR_Actions.default_MoveLeft,
+                    SteamVR_Actions.default_MoveRight,
+                    SteamVR_Actions.default_RotateRight,
+                    SteamVR_Actions.default_RotateLeft,
                     SteamVR_Actions.mixedreality_ExternalCamera};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
                     SteamVR_Actions.default_Haptic};
@@ -229,7 +301,13 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_RotateMenuLeft,
                     SteamVR_Actions.default_RotateMenuRight,
-                    SteamVR_Actions.default_CloseTheMenu};
+                    SteamVR_Actions.default_CloseTheMenu,
+                    SteamVR_Actions.default_MoveForward,
+                    SteamVR_Actions.default_MoveBackward,
+                    SteamVR_Actions.default_MoveLeft,
+                    SteamVR_Actions.default_MoveRight,
+                    SteamVR_Actions.default_RotateRight,
+                    SteamVR_Actions.default_RotateLeft};
             Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[] {
                     SteamVR_Actions.default_Squeeze};
             Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[0];
@@ -248,7 +326,13 @@ namespace Valve.VR
                     SteamVR_Actions.default_SnapTurnRight,
                     SteamVR_Actions.default_RotateMenuLeft,
                     SteamVR_Actions.default_RotateMenuRight,
-                    SteamVR_Actions.default_CloseTheMenu};
+                    SteamVR_Actions.default_CloseTheMenu,
+                    SteamVR_Actions.default_MoveForward,
+                    SteamVR_Actions.default_MoveBackward,
+                    SteamVR_Actions.default_MoveLeft,
+                    SteamVR_Actions.default_MoveRight,
+                    SteamVR_Actions.default_RotateRight,
+                    SteamVR_Actions.default_RotateLeft};
         }
         
         private static void PreInitActions()
@@ -267,6 +351,12 @@ namespace Valve.VR
             SteamVR_Actions.p_default_RotateMenuLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/RotateMenuLeft")));
             SteamVR_Actions.p_default_RotateMenuRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/RotateMenuRight")));
             SteamVR_Actions.p_default_CloseTheMenu = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/CloseTheMenu")));
+            SteamVR_Actions.p_default_MoveForward = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/MoveForward")));
+            SteamVR_Actions.p_default_MoveBackward = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/MoveBackward")));
+            SteamVR_Actions.p_default_MoveLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/MoveLeft")));
+            SteamVR_Actions.p_default_MoveRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/MoveRight")));
+            SteamVR_Actions.p_default_RotateRight = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/RotateRight")));
+            SteamVR_Actions.p_default_RotateLeft = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/default/in/RotateLeft")));
             SteamVR_Actions.p_default_Haptic = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/default/out/Haptic")));
             SteamVR_Actions.p_mixedreality_ExternalCamera = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/mixedreality/in/ExternalCamera")));
         }

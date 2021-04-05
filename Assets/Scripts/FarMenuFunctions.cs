@@ -41,6 +41,8 @@ public class FarMenuFunctions : MonoBehaviour
         //int layerMask = 1 << 9;
         //layerMask = ~layerMask;
 
+        Debug.DrawRay(rightBall.transform.position, rightBall.transform.TransformDirection(Vector3.forward), Color.black);
+
         // If ray hits something
         if (Physics.Raycast(rightBall.transform.position, rightBall.transform.TransformDirection(Vector3.forward), out RaycastHit hit, Mathf.Infinity, layerMask))
         {

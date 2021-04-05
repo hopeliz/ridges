@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Stairs Test.unity
     guid: 2832f8bd76a23e14db578b5e55d3f1bb
+  - enabled: 1
+    path: Assets/Scenes/Stairs and Full Model Test - Removing parts test.unity
+    guid: 399f1d7bdc6e7954db1264f84794dbae
   m_configObjects: {}

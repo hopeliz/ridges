@@ -16,5 +16,6 @@ public class FollowCamera : MonoBehaviour
     void Update()
     {
         transform.position = new Vector3(player.position.x, transform.position.y, player.position.z);
+        //transform.eulerAngles = new Vector3(0, player.eulerAngles.y, 0);
     }
 }

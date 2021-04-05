@@ -10,6 +10,10 @@ TagManager:
   - Stairs
   - Ground
   - 2nd Floor
+  - Hand
+  - Door
+  - Paint Can
+  - Paint Roller
   layers:
   - Default
   - TransparentFX
@@ -24,10 +28,10 @@ TagManager:
   - Screen
   - Buttons
   - Selection Target
-  - 
-  - 
-  - 
-  - 
+  - Menu
+  - ground
+  - Trigger
+  - Lit Screen
   - 
   - 
   - 
