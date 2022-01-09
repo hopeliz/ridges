@@ -1,19 +1,13 @@
-# ridges
-Github backup for my thesis as a move from computer to computer and get into the nitty gritty.
+# Practical Time Travel: The Ridges
 
-Currently in right-hand-work: 
-* Movement and menu placement works
-* Menu can open, close, and look at player so it always faces them initially
-* Menu selection circle (soon to be icon?) works, but needs polished
-* Menu can be "retreived" by pressing the grab button on the right hand (interaction hand)
+Practical Time Travel: The Ridges is an immersive user agency-centered experience providing facts about the history of the Athens State Hospital; some of the people who worked and lived there; the architecture; and industries related to the site. Through virtual reality, participants can learn historic facts, about motivations of those that lived in the past, and how multiple elements of life and culture are connected through activities involving trial and error, exploration, and puzzle-solving.
 
-Next steps:
-- [ ] Add Doors and Windows to floorplan models
-- [ ] Create lower-poly models
-- [ ] Test movement and screens in a floor
-- [ ] Add lighting to a floor
-* Once one floor is fleshed out enough, the other interactable floors will be easier to set up
+In its current state, it is a prototype of a start of a larger piece that involves a fictional A.I. character that gains humanity as it provides facts to the explorer.
 
-More menu work:
-- [ ] Add sound feedback
-- [ ] Create more main menu items for the main menu
+It currently uses teleportation and joystick rotation, but future versions will most likely have smooth movement that takes you linearly through the space like a screen-based game.
+
+### Other Notes
+
+I published the project here: [https://hopeliz.itch.io/practical-time-travel-the-ridges](https://hopeliz.itch.io/practical-time-travel-the-ridges)
+
+Practical Time Travel is a series of experimental interactive projects that send participants "back in time" to experience history using current technology.
